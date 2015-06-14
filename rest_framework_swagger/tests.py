@@ -651,7 +651,6 @@ class DocumentationGeneratorTest(TestCase):
         self.assertNotIn('parameters', post)
         self.assertIn('--iron-socks', post['notes'])
 
-
     def get_introspector_test(self):
         """
         yaml method specifications are dependent on all patterns
@@ -689,11 +688,12 @@ class DocumentationGeneratorTest(TestCase):
         urlparser = UrlParser()
         apis = urlparser.get_apis(url_patterns)
         api = apis[0]
-        self.assertIn('pk',api['pattern'].regex.pattern)
+        self.assertIn('pk', api['pattern'].regex.pattern)
         generator = DocumentationGenerator()
         introspector = generator.get_introspector(api, apis)
         method_introspectors = get_introspectors(introspector)
         method_introspectors['retrieve'].get_yaml_parser()
+
 
 class IntrospectorHelperTest(TestCase):
     def test_strip_yaml_from_docstring(self):
