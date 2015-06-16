@@ -694,6 +694,12 @@ class DocumentationGeneratorTest(TestCase):
         method_introspectors = get_introspectors(introspector)
         method_introspectors['retrieve'].get_yaml_parser()
 
+        full_doc = generator.generate(apis)
+        self.assertEqual(len(full_doc), 2)
+        detail_endpoint, list_endpoint = full_doc
+        self.assertEqual(len(detail_endpoint['operations']), 4)
+        self.assertEqual(len(list_endpoint['operations']), 2)
+
 
 class IntrospectorHelperTest(TestCase):
     def test_strip_yaml_from_docstring(self):
