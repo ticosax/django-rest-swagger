@@ -76,9 +76,26 @@
 <div id="message-bar" class="swagger-ui-wrap" data-sw-translate>&nbsp;</div>
 <div id="swagger-ui-container" class="swagger-ui-wrap"></div>
 
+<<<<<<< HEAD
 <script id="drs-settings" type="application/json">
 {{ drs_settings | safe }}
 </script>
+                {# Add version to Accept header, if AcceptHeaderVersioning is used. #}
+                {% if swagger_settings.api_version %}
+                    window.authorizations.add('version', {
+                        apply: function(obj, authorizations) {
+                            $.each(obj.headers, function(k, v) {
+                                if (k.toLowerCase() === "accept") {
+                                    if (v.indexOf('; version=') === -1) {
+                                        obj.headers[k] += "; version={{ swagger_settings.api_version }}";
+                                    }
+                                    return false;  // break.
+                                }
+                            });
+                            return true;
+                        }
+                    });
+                {% endif %}
 
 <script src='{% static "rest_framework_swagger/init.js" %}' type='text/javascript'></script>
 {% block extra_scripts %}
